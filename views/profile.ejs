@@ -12,6 +12,9 @@
       <div class="header-left">
         <h1 class="site-title">JobApplyTracker</h1>
       </div>
+      <div class="header-center">
+        <h1>Profile</h1>
+      </div>
       <div class="header-right">
         <a href="/profile" class="btn profile-btn">Profile</a>
         <a href="/logout" class="btn logout-btn">Logout</a>
@@ -19,7 +22,6 @@
     </div>
   </header>
   <div class="container">
-    <h1 class="header-center">Profile</h1>
     <form class="profile-form" action="/profile" method="POST">
       <div>
         <label for="firstname">First Name</label>
@@ -39,6 +41,7 @@
       </div>
       <button type="submit">Save</button>
     </form>
+    <a href="/dashboard" class="btn back-btn">Back to Dashboard</a>
   </div>
 </body>
 </html>

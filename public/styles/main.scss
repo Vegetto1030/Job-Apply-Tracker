@@ -109,6 +109,11 @@ body {
   @include button-styles($danger-color);
 }
 
+.back-btn {
+  @include button-styles($primary-color);
+  margin-top: 20px;
+}
+
 /* Layout Styles */
 .main-actions {
   display: flex;
@@ -122,38 +127,60 @@ body {
   list-style: none;
   padding: 0;
   margin: 20px 0;
-}
 
-.job-list li {
-  padding: 15px;
-  margin: 10px 0;
-  border: 1px solid $grey-color;
-  background: #fff;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-radius: 10px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  transition: box-shadow 0.3s;
+  li {
+    padding: 15px;
+    margin: 10px 0;
+    border: 1px solid $grey-color;
+    background: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s;
 
-  &:hover {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    &:hover {
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    h3 {
+      margin: 0;
+      font-size: 20px;
+      color: $dark-color;
+    }
+
+    p {
+      margin: 5px 0;
+      color: $grey-color;
+    }
+
+    .job-actions {
+      display: flex;
+      gap: 10px;
+
+      button, .btn {
+        flex-grow: 1;
+      }
+    }
+
+    .inline-form {
+      display: inline;
+    }
   }
-}
-
-.job-actions {
-  display: flex;
-  gap: 10px;
-}
-
-.inline-form {
-  display: inline;
 }
 
 .container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
+
+  .page-title {
+    text-align: center;
+    font-size: 28px;
+    margin-bottom: 20px;
+    color: $dark-color;
+  }
 }
 
 h1, h2, h3 {

@@ -1,30 +1,46 @@
+@import 'main';
 
-.register-form {
-  max-width: 300px;
-  margin: 100px auto;
-  padding: 30px;
-  border: 1px solid #ddd;
+/* Additional register-specific styles */
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
   background: #fff;
-}
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 
-.register-form input[type="text"],
-.register-form input[type="email"],
-.register-form input[type="password"] {
-  width: 100%;
-  padding: 10px;
-  margin: 10px 0;
-  border: 1px solid #ddd;
-}
+  h1 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
 
-.register-form button {
-  width: 100%;
-  padding: 10px;
-  background: #333;
-  color: #fff;
-  border: none;
-  cursor: pointer;
-}
+  div {
+    margin-bottom: 15px;
+  }
 
-.register-form button:hover {
-  background: #555;
+  label {
+    display: block;
+    margin-bottom: 5px;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  input[type="file"] {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid $grey-color;
+  }
+
+  button {
+    width: 100%;
+    margin-top: 20px;
+  }
+
+  .back-btn {
+    display: block;
+    margin-top: 20px;
+    text-align: center;
+  }
 }

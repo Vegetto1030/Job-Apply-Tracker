@@ -252,21 +252,88 @@ input:focus, select:focus, textarea:focus {
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 }
 
+/* Additional dashboard-specific styles */
+.search-form {
+  max-width: 600px;
+  margin: 20px auto;
+  display: flex;
+  gap: 10px;
+}
+.search-form input {
+  flex: 1;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #7f8c8d;
+}
+.search-form button {
+  flex-shrink: 0;
+}
+
 .job-list {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 20px;
+  list-style: none;
+  padding: 0;
+  margin: 20px 0;
+}
+.job-list li {
+  padding: 15px;
+  margin: 10px 0;
+  border: 1px solid #7f8c8d;
   background: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   border-radius: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s;
 }
-.job-list h2 {
-  margin-bottom: 10px;
+.job-list li:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
-.job-list p {
+.job-list li h3 {
+  margin: 0;
+  font-size: 20px;
+  color: #34495e;
+}
+.job-list li p {
+  margin: 5px 0;
+  color: #7f8c8d;
+}
+.job-list li .job-actions {
+  display: flex;
+  gap: 10px;
+}
+.job-list li .job-actions button, .job-list li .job-actions .btn {
+  flex-grow: 1;
+}
+.job-list li .inline-form {
+  display: inline;
+}
+
+.main-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
+  gap: 20px;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+.container .page-title {
+  text-align: center;
+  font-size: 28px;
+  margin-bottom: 20px;
+  color: #34495e;
+}
+
+h1, h2, h3 {
   margin-bottom: 15px;
 }
-.job-list .back-btn {
-  display: block;
-  margin-top: 20px;
+
+h1 {
+  font-size: 28px;
+  color: #34495e;
 }/*# sourceMappingURL=dashboard.css.map */

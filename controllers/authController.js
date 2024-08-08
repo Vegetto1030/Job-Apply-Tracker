@@ -1,20 +1,31 @@
-const User = require('../models/user');
+const User = require('../models/User');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const config = require('../config');
 
-exports.register = async (req, res) => {
+exports.registerUser = async (req, res) => {
   try {
-    const { firstname, lastname, email, password, github } = req.body;
-    if (!email || !password) {
-      return res.status(400).send('Email and password are required.');
-    }
+    console.log('Registering user:', req.body);
+    console.log('Uploaded files:', req.files);
+    
+    const { firstname, lastname, email, password } = req.body;
+    const profilePicture = req.files['profilePicture'] ? req.files['profilePicture'][0].filename : null;
+    const cv = req.files['cv'] ? req.files['cv'][0].filename : null;
 
-    const user = new User({ firstname, lastname, email, password, github });
-    await user.save();
-    res.status(201).send('User registered');
+    const newUser = new User({
+      firstname,
+      lastname,
+      email,
+      password,
+      profilePicture,
+      cv
+    });
+
+    await newUser.save();
+    res.redirect('/auth/login');
   } catch (error) {
-    res.status(400).send(error.message);
+    console.error('Error during user registration:', error);
+    res.status(500).send('Server Error');
   }
 };
 
@@ -31,6 +42,7 @@ exports.login = async (req, res) => {
     res.cookie('token', token, { httpOnly: true });
     res.redirect('/dashboard');
   } catch (error) {
+    console.error('Error during login:', error);
     res.status(400).send(error.message);
   }
 };

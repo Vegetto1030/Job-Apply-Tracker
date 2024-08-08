@@ -27,6 +27,7 @@ app.set('view engine', 'ejs');
 app.use('/', indexRoutes);
 app.use('/auth', authRoutes);
 app.use('/jobs', authMiddleware, jobRoutes);
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Start the server
 const PORT = process.env.PORT || 5000;
