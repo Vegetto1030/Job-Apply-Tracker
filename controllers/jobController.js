@@ -12,7 +12,8 @@ exports.createJob = async (req, res) => {
 
 exports.getJobs = async (req, res) => {
   try {
-    const jobs = await Job.find({ user: req.user.id });
+    const query = req.query.search ? { user: req.user.id, title: new RegExp(req.query.search, 'i') } : { user: req.user.id };
+    const jobs = await Job.find(query);
     res.render('dashboard', { jobs });
   } catch (error) {
     res.status(400).send(error.message);
@@ -24,6 +25,16 @@ exports.getJobById = async (req, res) => {
     const job = await Job.findOne({ _id: req.params.id, user: req.user.id });
     if (!job) return res.status(404).send('Job not found');
     res.render('jobDetail', { job });
+  } catch (error) {
+    res.status(400).send(error.message);
+  }
+};
+
+exports.getJobForEdit = async (req, res) => {  // Add this function
+  try {
+    const job = await Job.findOne({ _id: req.params.id, user: req.user.id });
+    if (!job) return res.status(404).send('Job not found');
+    res.render('editJob', { job });
   } catch (error) {
     res.status(400).send(error.message);
   }

@@ -8,17 +8,38 @@
 </head>
 <body>
   <header>
-    <h1>Dashboard</h1>
-    <a href="/jobs/create" class="btn">Create Job</a> <!-- Button to create a job -->
+    <div class="header-content">
+      <div class="header-left">
+        <h1 class="site-title">JobApplyTracker</h1>
+      </div>
+      <div class="header-right">
+        <a href="/profile" class="btn profile-btn">Profile</a>
+        <a href="/logout" class="btn logout-btn">Logout</a>
+      </div>
+    </div>
   </header>
   <div class="container">
+    <h1 class="header-center">Dashboard</h1>
+    <div class="main-actions">
+      <a href="/jobs/create" class="btn create-btn">Create Job</a>
+    </div>
+    <form class="search-form" action="/dashboard" method="GET">
+      <input type="text" name="search" placeholder="Search jobs">
+      <button type="submit" class="btn search-btn">Search</button>
+    </form>
     <ul class="job-list">
       <% jobs.forEach(job => { %>
         <li>
-          <h3><%= job.title %></h3>
+          <h3><%= job.title %> at <%= job.companyName %></h3>
           <p><%= job.website %></p>
           <p>Status: <%= job.status %></p>
-          <a href="/jobs/<%= job._id %>">View Details</a>
+          <div class="job-actions">
+            <a href="/jobs/<%= job._id %>" class="btn detail-btn">View Details</a>
+            <a href="/jobs/edit/<%= job._id %>" class="btn edit-btn">Edit</a>
+            <form action="/jobs/delete/<%= job._id %>" method="POST" class="inline-form">
+              <button type="submit" class="btn delete-btn">Delete</button>
+            </form>
+          </div>
         </li>
       <% }) %>
     </ul>

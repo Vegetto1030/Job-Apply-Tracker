@@ -8,11 +8,20 @@
 </head>
 <body>
   <header>
-    <h1>Job Detail</h1>
+    <div class="header-content">
+      <div class="header-left">
+        <h1 class="site-title">JobApplyTracker</h1>
+      </div>
+      <div class="header-right">
+        <a href="/profile" class="btn profile-btn">Profile</a>
+        <a href="/logout" class="btn logout-btn">Logout</a>
+      </div>
+    </div>
   </header>
   <div class="container">
+    <h1 class="header-center">Job Detail</h1>
     <div class="job-detail">
-      <h2><%= job.title %></h2>
+      <h2><%= job.title %> at <%= job.companyName %></h2>
       <p>Website: <a href="<%= job.website %>"><%= job.website %></a></p>
       <p>Employer Contact: <%= job.employerContact.name %></p>
       <p>Email: <%= job.employerContact.email %></p>
@@ -22,6 +31,7 @@
       <p>Status: <%= job.status %></p>
       <p>Comments: <%= job.comments %></p>
     </div>
+    <a href="/dashboard" class="btn back-btn">Back to Dashboard</a>
   </div>
 </body>
 </html>

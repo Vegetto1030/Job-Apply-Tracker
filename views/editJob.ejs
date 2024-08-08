@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/editJob.css">
+  <title>Edit Job</title>
+</head>
+<body>
+  <header>
+    <div class="header-content">
+      <div class="header-left">
+        <h1 class="site-title">JobApplyTracker</h1>
+      </div>
+      <div class="header-right">
+        <a href="/profile" class="btn profile-btn">Profile</a>
+        <a href="/logout" class="btn logout-btn">Logout</a>
+      </div>
+    </div>
+  </header>
+  <div class="container">
+    <h1 class="header-center">Edit Job</h1>
+    <form class="edit-job-form" action="/jobs/edit/<%= job._id %>" method="POST">
+      <input type="text" name="title" value="<%= job.title %>" placeholder="Job Title" required>
+      <input type="text" name="companyName" value="<%= job.companyName %>" placeholder="Company Name" required>
+      <input type="text" name="website" value="<%= job.website %>" placeholder="Company Website">
+      <input type="text" name="employerContact.name" value="<%= job.employerContact.name %>" placeholder="Employer Name">
+      <input type="email" name="employerContact.email" value="<%= job.employerContact.email %>" placeholder="Employer Email">
+      <input type="text" name="employerContact.phone" value="<%= job.employerContact.phone %>" placeholder="Employer Phone">
+      <input type="text" name="employerContact.address" value="<%= job.employerContact.address %>" placeholder="Employer Address">
+      <select name="origin" required>
+        <option value="Spontaneous" <%= job.origin === 'Spontaneous' ? 'selected' : '' %>>Spontaneous</option>
+        <option value="Job offer" <%= job.origin === 'Job offer' ? 'selected' : '' %>>Job offer</option>
+      </select>
+      <select name="status" required>
+        <option value="Interested" <%= job.status === 'Interested' ? 'selected' : '' %>>Interested</option>
+        <option value="CV sent" <%= job.status === 'CV sent' ? 'selected' : '' %>>CV sent</option>
+        <option value="Negative" <%= job.status === 'Negative' ? 'selected' : '' %>>Negative</option>
+        <option value="Interview" <%= job.status === 'Interview' ? 'selected' : '' %>>Interview</option>
+      </select>
+      <textarea name="comments" placeholder="Comments"><%= job.comments %></textarea>
+      <button type="submit">Save Changes</button>
+    </form>
+  </div>
+</body>
+</html>

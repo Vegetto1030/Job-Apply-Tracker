@@ -1,7 +1,7 @@
 @import 'main';
 
-/* Additional profile-specific styles */
-.profile-form {
+/* Additional editJob-specific styles */
+.edit-job-form {
   max-width: 600px;
   margin: 0 auto;
   padding: 20px;
@@ -9,7 +9,7 @@
   border-radius: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 
-  div {
+  input, select, textarea {
     margin-bottom: 20px;
   }
 

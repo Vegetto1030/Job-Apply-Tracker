@@ -17,10 +17,13 @@ router.get('/', authMiddleware, jobController.getJobs);
 // Route to get job details
 router.get('/:id', authMiddleware, jobController.getJobById);
 
+// Route to render job edit form
+router.get('/edit/:id', authMiddleware, jobController.getJobForEdit);  // Update this line
+
 // Route to update a job
-router.put('/:id', authMiddleware, jobController.updateJob);
+router.post('/edit/:id', authMiddleware, jobController.updateJob);
 
 // Route to delete a job
-router.delete('/:id', authMiddleware, jobController.deleteJob);
+router.post('/delete/:id', authMiddleware, jobController.deleteJob);
 
 module.exports = router;

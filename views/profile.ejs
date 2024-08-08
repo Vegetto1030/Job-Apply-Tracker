@@ -8,10 +8,19 @@
 </head>
 <body>
   <header>
-    <h1>Profile</h1>
+    <div class="header-content">
+      <div class="header-left">
+        <h1 class="site-title">JobApplyTracker</h1>
+      </div>
+      <div class="header-right">
+        <a href="/profile" class="btn profile-btn">Profile</a>
+        <a href="/logout" class="btn logout-btn">Logout</a>
+      </div>
+    </div>
   </header>
   <div class="container">
-    <form class="profile-form">
+    <h1 class="header-center">Profile</h1>
+    <form class="profile-form" action="/profile" method="POST">
       <div>
         <label for="firstname">First Name</label>
         <input type="text" id="firstname" name="firstname" value="<%= user.firstname %>">

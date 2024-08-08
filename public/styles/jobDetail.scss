@@ -1,17 +1,24 @@
 @import 'main';
 
+/* Additional jobDetail-specific styles */
 .job-detail {
-  max-width: 500px;
-  margin: 100px auto;
-  padding: 30px;
-  border: 1px solid #ddd;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
   background: #fff;
-}
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 
-.job-detail h2 {
-  margin-top: 0;
-}
+  h2 {
+    margin-bottom: 10px;
+  }
 
-.job-detail p {
-  margin: 5px 0;
+  p {
+    margin-bottom: 15px;
+  }
+
+  .back-btn {
+    display: block;
+    margin-top: 20px;
+  }
 }

@@ -252,31 +252,18 @@ input:focus, select:focus, textarea:focus {
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 }
 
-.login-form {
-  max-width: 300px;
-  margin: 100px auto;
-  padding: 30px;
-  border: 1px solid #ddd;
+/* Additional editJob-specific styles */
+.edit-job-form {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
   background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
-
-.login-form input[type=email],
-.login-form input[type=password] {
+.edit-job-form input, .edit-job-form select, .edit-job-form textarea {
+  margin-bottom: 20px;
+}
+.edit-job-form button {
   width: 100%;
-  padding: 10px;
-  margin: 10px 0;
-  border: 1px solid #ddd;
-}
-
-.login-form button {
-  width: 100%;
-  padding: 10px;
-  background: #333;
-  color: #fff;
-  border: none;
-  cursor: pointer;
-}
-
-.login-form button:hover {
-  background: #555;
-}/*# sourceMappingURL=login.css.map */
+}/*# sourceMappingURL=editJob.css.map */
