@@ -1,0 +1,20 @@
+{
+  "name": "job-apply-tracker",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "sass": "sass --watch public/styles:public/css",
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "cookie-parser": "^1.4.6",
+    "dotenv": "^8.2.0",
+    "ejs": "^3.1.10",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^5.10.0",
+    "nodemon": "^3.1.4",
+    "sass": "^1.32.8"
+  }
+}

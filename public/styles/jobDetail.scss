@@ -1,0 +1,17 @@
+@import 'main';
+
+.job-detail {
+  max-width: 500px;
+  margin: 100px auto;
+  padding: 30px;
+  border: 1px solid #ddd;
+  background: #fff;
+}
+
+.job-detail h2 {
+  margin-top: 0;
+}
+
+.job-detail p {
+  margin: 5px 0;
+}

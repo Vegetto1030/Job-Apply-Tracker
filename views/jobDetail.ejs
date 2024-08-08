@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/jobDetail.css">
+  <title>Job Detail</title>
+</head>
+<body>
+  <header>
+    <h1>Job Detail</h1>
+  </header>
+  <div class="container">
+    <div class="job-detail">
+      <h2><%= job.title %></h2>
+      <p>Website: <a href="<%= job.website %>"><%= job.website %></a></p>
+      <p>Employer Contact: <%= job.employerContact.name %></p>
+      <p>Email: <%= job.employerContact.email %></p>
+      <p>Phone: <%= job.employerContact.phone %></p>
+      <p>Address: <%= job.employerContact.address %></p>
+      <p>Origin: <%= job.origin %></p>
+      <p>Status: <%= job.status %></p>
+      <p>Comments: <%= job.comments %></p>
+    </div>
+  </div>
+</body>
+</html>

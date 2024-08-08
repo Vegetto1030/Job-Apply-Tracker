@@ -1,0 +1,31 @@
+@import 'main';
+
+.create-job-form {
+  max-width: 500px;
+  margin: 100px auto;
+  padding: 30px;
+  border: 1px solid #ddd;
+  background: #fff;
+}
+
+.create-job-form input[type="text"],
+.create-job-form input[type="email"],
+.create-job-form textarea {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+}
+
+.create-job-form button {
+  width: 100%;
+  padding: 10px;
+  background: #333;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+.create-job-form button:hover {
+  background: #555;
+}
