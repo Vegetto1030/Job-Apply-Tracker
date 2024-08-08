@@ -1,17 +1,19 @@
 const jwt = require('jsonwebtoken');
 const config = require('../config');
+const User = require('../models/User');
 
-const authMiddleware = (req, res, next) => {
-  const token = req.cookies.token;
-  if (!token) return res.status(401).send('Access denied. No token provided.');
+module.exports = async (req, res, next) => {
+  const token = req.cookies.token || '';
+  if (!token) {
+    return res.status(401).redirect('/auth/login');
+  }
 
   try {
     const decoded = jwt.verify(token, config.jwtSecret);
-    req.user = decoded;
+    req.user = await User.findById(decoded.id).select('-password');
     next();
-  } catch (ex) {
-    res.status(400).send('Invalid token.');
+  } catch (err) {
+    console.error('Error in authentication middleware:', err);
+    res.status(401).redirect('/auth/login');
   }
 };
-
-module.exports = authMiddleware;

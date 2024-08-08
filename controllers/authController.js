@@ -1,6 +1,8 @@
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const fs = require('fs');
+const path = require('path');
 const config = require('../config');
 
 exports.registerUser = async (req, res) => {
@@ -44,5 +46,51 @@ exports.login = async (req, res) => {
   } catch (error) {
     console.error('Error during login:', error);
     res.status(400).send(error.message);
+  }
+};
+
+exports.renderProfile = async (req, res) => {
+  try {
+    const userId = req.user.id; // req.user is set by authMiddleware
+    const user = await User.findById(userId);
+    res.render('profile', { user });
+  } catch (error) {
+    console.error('Error rendering profile:', error);
+    res.status(500).send('Server Error');
+  }
+};
+
+exports.updateProfile = async (req, res) => {
+  try {
+    const userId = req.user.id; // req.user is set by authMiddleware
+    const { firstname, lastname, email } = req.body;
+    const profilePicture = req.files['profilePicture'] ? req.files['profilePicture'][0].filename : null;
+    const cv = req.files['cv'] ? req.files['cv'][0].filename : null;
+
+    const updatedFields = { firstname, lastname, email };
+
+    // Delete old profile picture if a new one is uploaded
+    if (profilePicture) {
+      const user = await User.findById(userId);
+      if (user.profilePicture) {
+        fs.unlinkSync(path.join(__dirname, '..', 'uploads', 'profilePictures', user.profilePicture));
+      }
+      updatedFields.profilePicture = profilePicture;
+    }
+
+    // Delete old CV if a new one is uploaded
+    if (cv) {
+      const user = await User.findById(userId);
+      if (user.cv) {
+        fs.unlinkSync(path.join(__dirname, '..', 'uploads', 'cvs', user.cv));
+      }
+      updatedFields.cv = cv;
+    }
+
+    await User.findByIdAndUpdate(userId, updatedFields);
+    res.redirect('/auth/profile');
+  } catch (error) {
+    console.error('Error updating profile:', error);
+    res.status(500).send('Server Error');
   }
 };
