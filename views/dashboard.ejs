@@ -26,16 +26,27 @@
     <div class="main-actions">
       <a href="/jobs/create" class="btn create-btn">Create Job</a>
     </div>
+
+    <!-- Formulaire de recherche et de filtre -->
     <form class="search-form" action="/dashboard" method="GET">
-      <input type="text" name="search" placeholder="Search jobs">
+      <input type="text" name="search" placeholder="Search jobs" value="<%= (typeof search !== 'undefined') ? search : '' %>">
+      <select name="status">
+        <option value="">All Statuses</option>
+        <option value="Interested" <%= (typeof status !== 'undefined' && status === 'Interested') ? 'selected' : '' %>>Interested</option>
+        <option value="CV Sent" <%= (typeof status !== 'undefined' && status === 'CV Sent') ? 'selected' : '' %>>CV Sent</option>
+        <option value="Negative" <%= (typeof status !== 'undefined' && status === 'Negative') ? 'selected' : '' %>>Negative</option>
+        <option value="Interview" <%= (typeof status !== 'undefined' && status === 'Interview') ? 'selected' : '' %>>Interview</option>
+      </select>
       <button type="submit" class="btn search-btn">Search</button>
     </form>
+
+    <!-- Liste des jobs -->
     <ul class="job-list">
       <% jobs.forEach(job => { %>
         <li>
           <h3><%= job.title %> at <%= job.companyName %></h3>
           <p><%= job.website %></p>
-          <p>Status: <%= job.status %></p>
+          <p>Status: <%= job.status %></p> <!-- Affichage du statut -->
           <div class="job-actions">
             <a href="/jobs/<%= job._id %>" class="btn detail-btn">View Details</a>
             <a href="/jobs/edit/<%= job._id %>" class="btn edit-btn">Edit</a>

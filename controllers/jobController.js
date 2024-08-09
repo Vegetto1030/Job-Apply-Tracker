@@ -11,14 +11,25 @@ exports.createJob = async (req, res) => {
 };
 
 exports.getJobs = async (req, res) => {
-  try {
-    const query = req.query.search ? { user: req.user.id, title: new RegExp(req.query.search, 'i') } : { user: req.user.id };
-    const jobs = await Job.find(query);
-    res.render('dashboard', { jobs });
-  } catch (error) {
-    res.status(400).send(error.message);
-  }
-};
+    try {
+      const { search, status } = req.query;
+      let query = { user: req.user.id };
+  
+      if (search && search !== '') {
+        query.title = new RegExp(search, 'i');
+      }
+  
+      if (status && status !== '') {
+        query.status = status;
+      }
+  
+      const jobs = await Job.find(query);
+      res.render('dashboard', { jobs, search, status });
+    } catch (error) {
+      res.status(400).send(error.message);
+    }
+  };
+  
 
 exports.getJobById = async (req, res) => {
   try {

@@ -14,8 +14,29 @@
     border: 1px solid $grey-color;
   }
 
-  button {
+  select {
+    padding: 8px;  // Réduire le padding pour réduire la taille du filtre
+    border-radius: 5px;
+    border: 1px solid $grey-color;
+    background-color: white;
+    color: $dark-color;
     flex-shrink: 0;
+    min-width: 50px;  // Taille minimale pour le filtre
+  }
+
+  button {
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: none;
+    background-color: $primary-color;
+    color: #fff;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: background-color 0.3s;
+
+    &:hover {
+      background-color: darken($primary-color, 10%);
+    }
   }
 }
 

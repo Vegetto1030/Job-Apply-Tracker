@@ -4,31 +4,44 @@ const jwt = require('jsonwebtoken');
 const fs = require('fs');
 const path = require('path');
 const config = require('../config');
+const cloudinary = require('../config/cloudinary');
+const { generateSignedUrl } = require('../utils/cloudinaryService'); // Importer la fonction pour générer des URLs signées
 
 exports.registerUser = async (req, res) => {
-  try {
-    console.log('Registering user:', req.body);
-    console.log('Uploaded files:', req.files);
-    
-    const { firstname, lastname, email, password } = req.body;
-    const profilePicture = req.files['profilePicture'] ? req.files['profilePicture'][0].filename : null;
-    const cv = req.files['cv'] ? req.files['cv'][0].filename : null;
+    try {
+        const { firstname, lastname, email, password } = req.body;
+        const newUser = new User({
+            firstname,
+            lastname,
+            email,
+            password
+        });
 
-    const newUser = new User({
-      firstname,
-      lastname,
-      email,
-      password,
-      profilePicture,
-      cv
-    });
+        // Upload de l'image de profil
+        if (req.files['profilePicture']) {
+            const profilePicture = req.files['profilePicture'][0].path;
+            const uploadResult = await cloudinary.uploader.upload(profilePicture, {
+                upload_preset: 'qjskklo1'
+            });
+            newUser.profilePicture = uploadResult.secure_url;
+        }
 
-    await newUser.save();
-    res.redirect('/auth/login');
-  } catch (error) {
-    console.error('Error during user registration:', error);
-    res.status(500).send('Server Error');
-  }
+        // Upload du CV
+        if (req.files['cv']) {
+            const cvFile = req.files['cv'][0].path;
+            const uploadResult = await cloudinary.uploader.upload(cvFile, {
+                upload_preset: 'qjskklo1',
+                resource_type: "auto"
+            });
+            newUser.cv = uploadResult.secure_url;
+        }
+
+        await newUser.save();
+        res.redirect('/auth/login');
+    } catch (error) {
+        console.error('Error during user registration:', error);
+        res.status(500).send('Server Error');
+    }
 };
 
 exports.login = async (req, res) => {
@@ -50,47 +63,50 @@ exports.login = async (req, res) => {
 };
 
 exports.renderProfile = async (req, res) => {
-  try {
-    const userId = req.user.id; // req.user is set by authMiddleware
-    const user = await User.findById(userId);
-    res.render('profile', { user });
-  } catch (error) {
-    console.error('Error rendering profile:', error);
-    res.status(500).send('Server Error');
-  }
-};
-
-exports.updateProfile = async (req, res) => {
-  try {
-    const userId = req.user.id; // req.user is set by authMiddleware
-    const { firstname, lastname, email } = req.body;
-    const profilePicture = req.files['profilePicture'] ? req.files['profilePicture'][0].filename : null;
-    const cv = req.files['cv'] ? req.files['cv'][0].filename : null;
-
-    const updatedFields = { firstname, lastname, email };
-
-    // Delete old profile picture if a new one is uploaded
-    if (profilePicture) {
+    try {
+      const userId = req.user.id;
       const user = await User.findById(userId);
-      if (user.profilePicture) {
-        fs.unlinkSync(path.join(__dirname, '..', 'uploads', 'profilePictures', user.profilePicture));
-      }
-      updatedFields.profilePicture = profilePicture;
+  
+      // Utilisez le publicId exact du fichier sur Cloudinary
+      const cvPublicId = user.cv ? user.cv : null;
+      const signedCvUrl = cvPublicId ? generateSignedUrl(cvPublicId) : null;
+  
+      res.render('profile', { user, signedCvUrl });
+    } catch (error) {
+      console.error('Error rendering profile:', error);
+      res.status(500).send('Server Error');
     }
+  };
 
-    // Delete old CV if a new one is uploaded
-    if (cv) {
-      const user = await User.findById(userId);
-      if (user.cv) {
-        fs.unlinkSync(path.join(__dirname, '..', 'uploads', 'cvs', user.cv));
-      }
-      updatedFields.cv = cv;
+  exports.updateProfile = async (req, res) => {
+    try {
+        const userId = req.user.id;
+        const { firstname, lastname, email } = req.body;
+        const updatedFields = { firstname, lastname, email };
+
+        // Upload de l'image de profil
+        if (req.files['profilePicture']) {
+            const profilePicture = req.files['profilePicture'][0].path;
+            const uploadResult = await cloudinary.uploader.upload(profilePicture, {
+                upload_preset: 'qjskklo1'
+            });
+            updatedFields.profilePicture = uploadResult.secure_url;
+        }
+
+        // Upload du CV
+        if (req.files['cv']) {
+            const cvFile = req.files['cv'][0].path;
+            const uploadResult = await cloudinary.uploader.upload(cvFile, {
+                upload_preset: 'qjskklo1',
+                resource_type: "auto"
+            });
+            updatedFields.cv = uploadResult.secure_url;
+        }
+
+        await User.findByIdAndUpdate(userId, updatedFields);
+        res.redirect('/auth/profile');
+    } catch (error) {
+        console.error('Error updating profile:', error);
+        res.status(500).send('Server Error');
     }
-
-    await User.findByIdAndUpdate(userId, updatedFields);
-    res.redirect('/auth/profile');
-  } catch (error) {
-    console.error('Error updating profile:', error);
-    res.status(500).send('Server Error');
-  }
 };

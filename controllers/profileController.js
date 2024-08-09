@@ -10,10 +10,32 @@ exports.getProfile = async (req, res) => {
 };
 
 exports.updateProfile = async (req, res) => {
-  try {
-    await User.findByIdAndUpdate(req.user.id, req.body, { new: true });
-    res.redirect('/dashboard');  // Redirect to dashboard after saving profile
-  } catch (error) {
-    res.status(400).send(error.message);
-  }
+    try {
+        const userId = req.user.id;
+        const { firstname, lastname, email } = req.body;
+        const updatedFields = { firstname, lastname, email };
+
+        // Mise à jour de l'image de profil
+        if (req.files['profilePicture']) {
+            const uploadResult = await cloudinary.uploader.upload(req.files['profilePicture'][0].path, {
+                upload_preset: 'qjskklo1'
+            });
+            updatedFields.profilePicture = uploadResult.secure_url;
+        }
+
+        // Mise à jour du CV
+        if (req.files['cv']) {
+            const uploadResult = await cloudinary.uploader.upload(req.files['cv'][0].path, {
+                upload_preset: 'qjskklo1',
+                resource_type: "auto"
+            });
+            updatedFields.cv = uploadResult.secure_url;
+        }
+
+        await User.findByIdAndUpdate(userId, updatedFields);
+        res.redirect('/auth/profile');
+    } catch (error) {
+        console.error('Error updating profile:', error);
+        res.status(500).send('Server Error');
+    }
 };

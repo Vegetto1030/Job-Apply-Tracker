@@ -296,8 +296,27 @@ input:focus, select:focus, textarea:focus {
   border-radius: 5px;
   border: 1px solid #7f8c8d;
 }
-.search-form button {
+.search-form select {
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #7f8c8d;
+  background-color: white;
+  color: #34495e;
   flex-shrink: 0;
+  min-width: 50px;
+}
+.search-form button {
+  padding: 10px 20px;
+  border-radius: 5px;
+  border: none;
+  background-color: #4a90e2;
+  color: #fff;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background-color 0.3s;
+}
+.search-form button:hover {
+  background-color: #2275d7;
 }
 
 .job-list {

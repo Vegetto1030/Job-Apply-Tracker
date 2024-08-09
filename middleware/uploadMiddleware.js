@@ -1,33 +1,19 @@
 const multer = require('multer');
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
+const cloudinary = require('../config/cloudinary');
 const path = require('path');
 
-// Set storage engine
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    if (file.fieldname === 'profilePicture') {
-      cb(null, 'uploads/profilePictures/');
-    } else if (file.fieldname === 'cv') {
-      cb(null, 'uploads/cvs/');
-    }
+// Configure le stockage avec Cloudinary
+const storage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: {
+    folder: 'job-apply-tracker', // Dossier sur Cloudinary
+    allowed_formats: ['jpg', 'png', 'pdf'], // Formats de fichiers acceptés
+    public_id: (req, file) => `${file.fieldname}-${Date.now()}`
   },
-  filename: function (req, file, cb) {
-    cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
-  }
 });
 
-// Initialize upload
-const upload = multer({
-  storage: storage,
-  limits: { fileSize: 1000000 }, // Limit file size to 1MB
-  fileFilter: function (req, file, cb) {
-    checkFileType(file, cb);
-  }
-}).fields([
-  { name: 'profilePicture', maxCount: 1 },
-  { name: 'cv', maxCount: 1 }
-]);
-
-// Check file type
+// Fonction de filtrage des types de fichiers
 function checkFileType(file, cb) {
   const filetypes = /jpeg|jpg|png|pdf/;
   const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
@@ -39,5 +25,17 @@ function checkFileType(file, cb) {
     cb('Error: Images and PDFs only!');
   }
 }
+
+// Initialiser multer avec CloudinaryStorage
+const upload = multer({
+  storage: storage,
+  limits: { fileSize: 1000000 }, // Limiter la taille des fichiers à 1 Mo
+  fileFilter: function (req, file, cb) {
+    checkFileType(file, cb);
+  }
+}).fields([
+  { name: 'profilePicture', maxCount: 1 },
+  { name: 'cv', maxCount: 1 }
+]);
 
 module.exports = upload;
