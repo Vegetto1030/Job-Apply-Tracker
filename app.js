@@ -20,14 +20,14 @@ mongoose.connect(config.mongoURI, { useNewUrlParser: true, useUnifiedTopology: t
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static('public'));
 app.set('view engine', 'ejs');
 
 // Routes
 app.use('/', indexRoutes);
 app.use('/auth', authRoutes);
 app.use('/jobs', authMiddleware, jobRoutes);
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use('/uploads', express.static('uploads'));
 
 // Start the server
 const PORT = process.env.PORT || 5000;
