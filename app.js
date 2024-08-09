@@ -8,7 +8,7 @@ const authRoutes = require('./routes/auth');
 const jobRoutes = require('./routes/jobs');
 const indexRoutes = require('./routes/index');
 const authMiddleware = require('./middleware/authMiddleware');
-
+const User = require('./models/User');
 const app = express();
 
 // Connect to MongoDB

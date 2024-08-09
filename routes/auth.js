@@ -3,6 +3,7 @@ const router = express.Router();
 const authController = require('../controllers/authController');
 const upload = require('../middleware/uploadMiddleware');
 const authMiddleware = require('../middleware/authMiddleware');
+const User = require('../models/User');
 
 // Register user with file uploads
 router.post('/register', upload, authController.registerUser);
