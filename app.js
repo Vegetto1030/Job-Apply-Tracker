@@ -12,9 +12,15 @@ const User = require('./models/User');
 const app = express();
 
 // Connect to MongoDB
-mongoose.connect(config.mongoURI)
-  .then(() => console.log('MongoDB connected'))
-  .catch(err => console.log(err));
+mongoose.connect(config.mongoURI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,  // Si vous utilisez des index dans vos modèles
+    useFindAndModify: false // Si vous utilisez findOneAndUpdate ou findOneAndDelete
+  })
+    .then(() => console.log('MongoDB connected'))
+    .catch(err => console.log('MongoDB connection error:', err));
+  
 
 // Middleware
 app.use(express.json());
